@@ -1,0 +1,52 @@
+
+# Log4j2.yml configuration
+Configutation:
+  name: Default
+
+  Properties:
+    Property:
+      name: log_pattern
+      value: "%d{yyyy-MM-dd HH:mm:ss.SSS} %5p ${hostName} --- [%15.15t] %-40.40c{1.} : %m%n%ex"
+
+  Appenders:
+    Console:
+      name: Console_Appender
+      target: SYSTEM_OUT
+      PatternLayout:
+        pattern: ${log_pattern}
+
+    File:
+      name: File_Appender
+      fileName: eventlogs/filelogs.log
+      PatternLayout:
+        Pattern: ${log_pattern}
+
+    RollingFile:
+      - name: RollingFile_Appender
+        fileName: eventlogs/eventlog.log
+        filePattern: "eventlogs/$${date:yyyy-MM}/eventlog-%d{MM-dd-yyyy}-%i.log.gz"
+        PatternLayout:
+          pattern: ${log_pattern} # "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+        Policies:
+          SizeBasedTriggeringPolicy:
+            size: 10MB
+        DefaultRollOverStrategy:
+          max: 10
+
+  Loggers:
+
+    Root:
+      level: info
+      AppenderRef:
+        - ref: Console_Appender
+    Logger:
+      - name: com.jsonparser
+        level: debug
+        additivity: false
+        AppenderRef:
+          - ref: Console_Appender
+            level: info
+          - ref: File_Appender
+            level: info
+          - ref: RollingFile_Appender
+            level: info
