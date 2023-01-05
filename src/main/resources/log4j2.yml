@@ -36,13 +36,13 @@ Configutation:
   Loggers:
 
     Root:
-      level: info
+      level: debug
       AppenderRef:
         - ref: Console_Appender
     Logger:
       - name: com.jsonparser
         level: debug
-        additivity: false
+        additivity: true
         AppenderRef:
           - ref: Console_Appender
             level: info
