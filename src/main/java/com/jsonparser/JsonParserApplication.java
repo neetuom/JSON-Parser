@@ -37,6 +37,9 @@ public class JsonParserApplication implements CommandLineRunner {
 	Map<String,Long> eventFinishIdAndTimeStampTreeMap = new TreeMap<String,Long>();
 
 	public static void main(String[] args)  {
+		LOG.info("Info level log message");
+		LOG.debug("Debug level log message");
+		LOG.error("Error level log message");
 
 		SpringApplication.run(JsonParserApplication.class, args);
 	}
